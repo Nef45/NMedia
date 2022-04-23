@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">NMedia</string>
     <string name="title">NMedia!</string>
+    <string name="avatar_text_description">Author avatar</string>
+    <string name="options_text_description">Post options</string>
+    <string name="views_text_description">Number of post views</string>
+    <string name="shares_text_description">Number of post shares</string>
+    <string name="likes_text_description">Number of post likes</string>
 </resources>
