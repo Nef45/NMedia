@@ -2,11 +2,16 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
+import androidx.lifecycle.ViewModelStore
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<PostViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,29 +19,16 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val myPost = Post(
-            0L,
-            "Anna",
-            "Text",
-            "24.04.2022",
-            999,
-            false,
-            9998,
-            0
-        )
-
-        binding.fillPost(myPost)
+        viewModel.data.observe(this) { post ->
+            binding.fillPost(post)
+        }
 
         binding.likesImageButton.setOnClickListener {
-            myPost.likedByMe = !myPost.likedByMe
-            myPost.likes = getLikesCounter(myPost)
-            binding.likesImageButton.setImageResource(getLikeIcon(myPost.likedByMe))
-            binding.postLikes.text = myPost.likes.formatNumber()
+            viewModel.onLikeButtonClicked()
         }
 
         binding.shareImageButton.setOnClickListener {
-            myPost.shares = getSharesCounter(myPost)
-            binding.postShare.text = myPost.shares.formatNumber()
+            viewModel.onShareButtonClicked()
         }
     }
 
@@ -44,9 +36,10 @@ class MainActivity : AppCompatActivity() {
         authorNameTextView.text = post.author
         postText.text = post.content
         dateAndTimeTextView.text = post.published
-        postLikes.text = post.likes.toString()
-        postShare.text = post.shares.toString()
+        postLikes.text = post.likes.formatNumber()
+        postShare.text = post.shares.formatNumber()
         postViews.text = post.views.toString()
+        likesImageButton.setImageResource(getLikeIcon(post.likedByMe))
     }
 
     @DrawableRes
@@ -56,18 +49,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             R.drawable.ic_likes_24dp
         }
-    }
-
-    private fun getLikesCounter(post: Post): Int {
-        return if (post.likedByMe) {
-            post.likes + 1
-        } else {
-            post.likes - 1
-        }
-    }
-
-    private fun getSharesCounter(post: Post): Int {
-        return post.shares + 1
     }
 
     private fun Int.formatNumber(): String {
