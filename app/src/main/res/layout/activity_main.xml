@@ -1,166 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/common_spacing"
+    android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/avatarImageView"
-        android:layout_width="@dimen/post_avatar_size"
-        android:layout_height="@dimen/post_avatar_size"
-        android:contentDescription="@string/avatar_text_description"
-        android:scaleType="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
-
-    <TextView
-        android:id="@+id/authorNameTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:layout_marginEnd="@dimen/common_spacing"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:text=""
-        android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toTopOf="@id/dateAndTimeTextView"
-        app:layout_constraintEnd_toStartOf="@id/moreOptionsImageButton"
-        app:layout_constraintStart_toEndOf="@+id/avatarImageView"
-        app:layout_constraintTop_toTopOf="@+id/avatarImageView"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Нетология. Университет интернет-профессий" />
-
-    <TextView
-        android:id="@+id/dateAndTimeTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:text=""
-        android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toBottomOf="@id/avatarImageView"
-        app:layout_constraintEnd_toEndOf="@id/authorNameTextView"
-        app:layout_constraintStart_toStartOf="@id/authorNameTextView"
-        app:layout_constraintTop_toBottomOf="@id/authorNameTextView"
-        tools:text="21 мая в 18:36" />
-
-    <ImageButton
-        android:id="@+id/moreOptionsImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/options_text_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/authorNameTextView"
-        app:layout_constraintTop_toTopOf="@id/authorNameTextView"
-        app:srcCompat="@drawable/ic_more_options_24dp" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrierTop"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:barrierDirection="bottom"
-        app:barrierMargin="@dimen/common_spacing"
-        app:constraint_referenced_ids="avatarImageView, dateAndTimeTextView, moreOptionsImageButton" />
-
-    <TextView
-        android:id="@+id/postText"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginBottom="@dimen/common_spacing"
-        android:ellipsize="end"
-        android:lineSpacingExtra="4dp"
-        android:maxLines="10"
-        android:singleLine="false"
-        android:textSize="@dimen/text_size"
-        app:layout_constraintTop_toBottomOf="@id/barrierTop"
-        tools:text="@tools:sample/lorem/random" />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/post" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrierBottom"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:barrierDirection="bottom"
-        app:barrierMargin="@dimen/common_spacing"
-        app:constraint_referenced_ids="postText" />
-
-    <ImageButton
-        android:id="@+id/likesImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginBottom="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/likes_text_description"
-        app:layout_constraintEnd_toStartOf="@id/postLikes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrierBottom"
-        app:srcCompat="@drawable/ic_likes_24dp" />
-
-    <TextView
-        android:id="@+id/postLikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text=""
-        android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toBottomOf="@id/likesImageButton"
-        app:layout_constraintEnd_toStartOf="@id/shareImageButton"
-        app:layout_constraintStart_toEndOf="@id/likesImageButton"
-        app:layout_constraintTop_toTopOf="@id/likesImageButton"
-        tools:text="10" />
-
-    <ImageButton
-        android:id="@+id/shareImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/shares_text_description"
-        app:layout_constraintBottom_toBottomOf="@id/postLikes"
-        app:layout_constraintEnd_toStartOf="@id/postShare"
-        app:layout_constraintStart_toEndOf="@id/postLikes"
-        app:layout_constraintTop_toTopOf="@id/postLikes"
-        app:srcCompat="@drawable/ic_share_24dp" />
-
-    <TextView
-        android:id="@+id/postShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text=""
-        android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toBottomOf="@id/shareImageButton"
-        app:layout_constraintStart_toEndOf="@id/shareImageButton"
-        app:layout_constraintTop_toTopOf="@id/shareImageButton"
-        tools:text="5" />
-
-    <ImageButton
-        android:id="@+id/viewsImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/views_text_description"
-        app:layout_constraintBottom_toBottomOf="@id/postShare"
-        app:layout_constraintEnd_toStartOf="@id/postViews"
-        app:layout_constraintTop_toTopOf="@id/postShare"
-        app:srcCompat="@drawable/ic_views_24dp" />
-
-    <TextView
-        android:id="@+id/postViews"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toBottomOf="@id/viewsImageButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/viewsImageButton"
-        tools:text="5" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

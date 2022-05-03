@@ -6,43 +6,53 @@ import ru.netology.nmedia.dto.Post
 
 class PostRepositoryInMemory : PostRepository {
 
-    private var initialPost = Post(
-        0L,
-        "Anna",
-        "Text",
-        "24.04.2022",
-        999,
-        false,
-        9998,
-        0
+    override val data = MutableLiveData(
+        List(100) { index ->
+            Post(
+                index + 1L,
+                "Netology",
+                "Text $index",
+                "24.04.2022",
+                999,
+                false,
+                9998,
+                0
+            )
+        }
     )
 
-    override val data = MutableLiveData(initialPost)
-
-    override fun like() {
-        val currentPost = data.value
-        checkNotNull(currentPost) {
+    private val listOfPosts
+        get() = checkNotNull(data.value) {
             "Data value should not be null"
         }
-        val likedPost = currentPost.copy(
-            likedByMe = !currentPost.likedByMe,
-            likes = if (!currentPost.likedByMe) {
-                currentPost.likes + 1
+
+    override fun like(postId: Long) {
+        val newListOfPosts = listOfPosts.map {
+            if (it.id == postId) {
+                it.copy(
+                    likedByMe = !it.likedByMe,
+                    likes = if (!it.likedByMe) {
+                        it.likes + 1
+                    } else {
+                        it.likes - 1
+                    }
+                )
             } else {
-                currentPost.likes - 1
+                it
             }
-        )
-
-        data.value = likedPost
-    }
-
-    override fun share() {
-        val currentPost = data.value
-        checkNotNull(currentPost) {
-            "Data value should not be null"
         }
-        val sharedPost = currentPost.copy(shares = currentPost.shares + 1)
-        data.value = sharedPost
+        data.value = newListOfPosts
+    }
+    
+    override fun share(postId: Long) {
+        val newListOfPosts = listOfPosts.map {
+            if (it.id == postId) {
+                it.copy(shares = it.shares + 1)
+            } else {
+                it
+            }
+        }
+        data.value = newListOfPosts
     }
 
 
