@@ -1,7 +1,8 @@
-package ru.netology.nmedia.data.impl
+package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,32 +12,62 @@ import ru.netology.nmedia.databinding.PostBinding
 import ru.netology.nmedia.dto.Post
 
 internal class PostsAdapter(
-    private val onLikeClicked: (Post) -> Unit,
-    private val onShareClicked: (Post) -> Unit
+    private val interactionListener: PostInteractionListener
+
 ) : ListAdapter<Post, PostsAdapter.PostsViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = PostBinding.inflate(inflater, parent, false)
-        return PostsViewHolder(binding, onLikeClicked, onShareClicked)
+        return PostsViewHolder(binding, interactionListener)
     }
 
     override fun onBindViewHolder(holder: PostsViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
+
     class PostsViewHolder(
         private val binding: PostBinding,
-        private val onLikeClicked: (Post) -> Unit,
-        private val onShareClicked: (Post) -> Unit
+        private val interactionListener: PostInteractionListener
 
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var post: Post
 
+        private val popupMenu by lazy {
+            PopupMenu(itemView.context, binding.postOptionsImageButton).apply {
+                inflate(R.menu.post_options)
+                setOnMenuItemClickListener { option ->
+                    when (option.itemId) {
+                        R.id.deletePostOption -> {
+                            interactionListener.onDeleteMenuOptionClicked(post)
+                            true
+                        }
+                        R.id.editPostOption -> {
+                            interactionListener.onEditMenuOptionClicked(post)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }
+        }
+
         init {
-            binding.likesImageButton.setOnClickListener { onLikeClicked(post) }
-            binding.shareImageButton.setOnClickListener { onShareClicked(post) }
+            binding.likesImageButton.setOnClickListener {
+                interactionListener.onLikeButtonClicked(
+                    post
+                )
+            }
+            binding.shareImageButton.setOnClickListener {
+                interactionListener.onShareButtonClicked(
+                    post
+                )
+            }
+            binding.postOptionsImageButton.setOnClickListener {
+                popupMenu.show()
+            }
         }
 
         fun bind(post: Post) {

@@ -27,7 +27,7 @@
         android:text=""
         android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toTopOf="@id/dateAndTimeTextView"
-        app:layout_constraintEnd_toStartOf="@id/moreOptionsImageButton"
+        app:layout_constraintEnd_toStartOf="@id/postOptionsImageButton"
         app:layout_constraintStart_toEndOf="@+id/avatarImageView"
         app:layout_constraintTop_toTopOf="@+id/avatarImageView"
         app:layout_constraintVertical_chainStyle="packed"
@@ -48,7 +48,7 @@
         tools:text="21 мая в 18:36" />
 
     <ImageButton
-        android:id="@+id/moreOptionsImageButton"
+        android:id="@+id/postOptionsImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -56,7 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/authorNameTextView"
         app:layout_constraintTop_toTopOf="@id/authorNameTextView"
-        app:srcCompat="@drawable/ic_more_options_24dp" />
+        app:srcCompat="@drawable/ic_more_options_24dp"
+        />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierTop"
@@ -64,7 +65,7 @@
         android:layout_height="0dp"
         app:barrierDirection="bottom"
         app:barrierMargin="@dimen/common_spacing"
-        app:constraint_referenced_ids="avatarImageView, dateAndTimeTextView, moreOptionsImageButton" />
+        app:constraint_referenced_ids="avatarImageView, dateAndTimeTextView, postOptionsImageButton" />
 
     <TextView
         android:id="@+id/postText"

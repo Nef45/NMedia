@@ -9,7 +9,7 @@ class PostRepositoryInMemory : PostRepository {
     override val data = MutableLiveData(
         List(100) { index ->
             Post(
-                index + 1L,
+                100L - index,
                 "Netology",
                 "Text $index",
                 "24.04.2022",
@@ -43,7 +43,7 @@ class PostRepositoryInMemory : PostRepository {
         }
         data.value = newListOfPosts
     }
-    
+
     override fun share(postId: Long) {
         val newListOfPosts = listOfPosts.map {
             if (it.id == postId) {
@@ -55,5 +55,33 @@ class PostRepositoryInMemory : PostRepository {
         data.value = newListOfPosts
     }
 
+    override fun delete(postId: Long) {
+        data.value = listOfPosts.filter { it.id != postId }
+    }
 
+    override fun create(post: Post) {
+        data.value = listOf(
+            post.copy(
+                id = listOfPosts.first().id + 1
+            )
+        ) + listOfPosts
+    }
+
+    override fun update(post: Post) {
+        data.value = listOfPosts.map {
+            if (it.id == post.id) {
+                post
+            } else {
+                it
+            }
+        }
+    }
+
+    fun save(post: Post) {
+        if (post.id == PostRepository.NEW_POST_ID) {
+            create(post)
+        } else {
+            update(post)
+        }
+    }
 }
