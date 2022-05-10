@@ -16,6 +16,7 @@ class PostRepositoryInMemory : PostRepository {
                 999,
                 false,
                 9998,
+                false,
                 0
             )
         }
@@ -47,7 +48,10 @@ class PostRepositoryInMemory : PostRepository {
     override fun share(postId: Long) {
         val newListOfPosts = listOfPosts.map {
             if (it.id == postId) {
-                it.copy(shares = it.shares + 1)
+                it.copy(
+                    shares = it.shares + 1,
+                    sharedByMe = true
+                )
             } else {
                 it
             }

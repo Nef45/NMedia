@@ -3,7 +3,6 @@ package ru.netology.nmedia.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +35,7 @@ internal class PostsAdapter(
         private lateinit var post: Post
 
         private val popupMenu by lazy {
-            PopupMenu(itemView.context, binding.postOptionsImageButton).apply {
+            PopupMenu(itemView.context, binding.postOptionsMaterialButton).apply {
                 inflate(R.menu.post_options)
                 setOnMenuItemClickListener { option ->
                     when (option.itemId) {
@@ -48,24 +47,26 @@ internal class PostsAdapter(
                             interactionListener.onEditMenuOptionClicked(post)
                             true
                         }
-                        else -> false
+                        else -> {
+                            false
+                        }
                     }
                 }
             }
         }
 
         init {
-            binding.likesImageButton.setOnClickListener {
+            binding.likesMaterialButton.setOnClickListener {
                 interactionListener.onLikeButtonClicked(
                     post
                 )
             }
-            binding.shareImageButton.setOnClickListener {
+            binding.shareMaterialButton.setOnClickListener {
                 interactionListener.onShareButtonClicked(
                     post
                 )
             }
-            binding.postOptionsImageButton.setOnClickListener {
+            binding.postOptionsMaterialButton.setOnClickListener {
                 popupMenu.show()
             }
         }
@@ -76,19 +77,11 @@ internal class PostsAdapter(
                 authorNameTextView.text = post.author
                 postText.text = post.content
                 dateAndTimeTextView.text = post.published
-                postLikes.text = post.likes.formatNumber()
-                postShare.text = post.shares.formatNumber()
+                likesMaterialButton.text = post.likes.formatNumber()
+                likesMaterialButton.isChecked = post.likedByMe
+                shareMaterialButton.text = post.shares.formatNumber()
+                shareMaterialButton.isChecked = post.sharedByMe
                 postViews.text = post.views.toString()
-                likesImageButton.setImageResource(getLikeIcon(post.likedByMe))
-            }
-        }
-
-        @DrawableRes
-        private fun getLikeIcon(liked: Boolean): Int {
-            return if (liked) {
-                R.drawable.ic_likes_clicked_24dp
-            } else {
-                R.drawable.ic_likes_24dp
             }
         }
 
