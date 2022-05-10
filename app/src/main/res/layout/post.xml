@@ -27,7 +27,7 @@
         android:text=""
         android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toTopOf="@id/dateAndTimeTextView"
-        app:layout_constraintEnd_toStartOf="@id/moreOptionsImageButton"
+        app:layout_constraintEnd_toStartOf="@id/postOptionsMaterialButton"
         app:layout_constraintStart_toEndOf="@+id/avatarImageView"
         app:layout_constraintTop_toTopOf="@+id/avatarImageView"
         app:layout_constraintVertical_chainStyle="packed"
@@ -39,7 +39,6 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text=""
         android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toBottomOf="@id/avatarImageView"
         app:layout_constraintEnd_toEndOf="@id/authorNameTextView"
@@ -47,16 +46,16 @@
         app:layout_constraintTop_toBottomOf="@id/authorNameTextView"
         tools:text="21 мая в 18:36" />
 
-    <ImageButton
-        android:id="@+id/moreOptionsImageButton"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/postOptionsMaterialButton"
+        style="@style/Widget.AppTheme.OptionsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
         android:contentDescription="@string/options_text_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/authorNameTextView"
-        app:layout_constraintTop_toTopOf="@id/authorNameTextView"
-        app:srcCompat="@drawable/ic_more_options_24dp" />
+        app:layout_constraintTop_toTopOf="@id/avatarImageView"
+        />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierTop"
@@ -64,7 +63,7 @@
         android:layout_height="0dp"
         app:barrierDirection="bottom"
         app:barrierMargin="@dimen/common_spacing"
-        app:constraint_referenced_ids="avatarImageView, dateAndTimeTextView, moreOptionsImageButton" />
+        app:constraint_referenced_ids="avatarImageView, dateAndTimeTextView, postOptionsMaterialButton" />
 
     <TextView
         android:id="@+id/postText"
@@ -88,55 +87,28 @@
         app:barrierMargin="@dimen/common_spacing"
         app:constraint_referenced_ids="postText" />
 
-    <ImageButton
-        android:id="@+id/likesImageButton"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/likesMaterialButton"
+        style="@style/Widget.AppTheme.LikeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginBottom="@dimen/common_spacing"
-        android:background="@android:color/transparent"
+        android:checkable="true"
         android:contentDescription="@string/likes_text_description"
-        app:layout_constraintEnd_toStartOf="@id/postLikes"
+        app:layout_constraintEnd_toStartOf="@id/likesMaterialButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrierBottom"
-        app:srcCompat="@drawable/ic_likes_24dp" />
+        tools:text="100" />
 
-    <TextView
-        android:id="@+id/postLikes"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shareMaterialButton"
+        style="@style/Widget.AppTheme.ShareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text=""
-        android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toBottomOf="@id/likesImageButton"
-        app:layout_constraintEnd_toStartOf="@id/shareImageButton"
-        app:layout_constraintStart_toEndOf="@id/likesImageButton"
-        app:layout_constraintTop_toTopOf="@id/likesImageButton"
-        tools:text="10" />
-
-    <ImageButton
-        android:id="@+id/shareImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:background="@android:color/transparent"
+        android:checkable="true"
         android:contentDescription="@string/shares_text_description"
-        app:layout_constraintBottom_toBottomOf="@id/postLikes"
-        app:layout_constraintEnd_toStartOf="@id/postShare"
-        app:layout_constraintStart_toEndOf="@id/postLikes"
-        app:layout_constraintTop_toTopOf="@id/postLikes"
-        app:srcCompat="@drawable/ic_share_24dp" />
-
-    <TextView
-        android:id="@+id/postShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text=""
-        android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toBottomOf="@id/shareImageButton"
-        app:layout_constraintStart_toEndOf="@id/shareImageButton"
-        app:layout_constraintTop_toTopOf="@id/shareImageButton"
+        app:layout_constraintBottom_toBottomOf="@id/likesMaterialButton"
+        app:layout_constraintStart_toEndOf="@id/likesMaterialButton"
+        app:layout_constraintTop_toTopOf="@id/likesMaterialButton"
         tools:text="5" />
 
     <ImageButton
@@ -146,9 +118,9 @@
         android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/views_text_description"
-        app:layout_constraintBottom_toBottomOf="@id/postShare"
+        app:layout_constraintBottom_toBottomOf="@id/shareMaterialButton"
         app:layout_constraintEnd_toStartOf="@id/postViews"
-        app:layout_constraintTop_toTopOf="@id/postShare"
+        app:layout_constraintTop_toTopOf="@id/shareMaterialButton"
         app:srcCompat="@drawable/ic_views_24dp" />
 
     <TextView
