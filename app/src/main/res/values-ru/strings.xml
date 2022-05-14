@@ -7,4 +7,12 @@
     <string name="views_text_description">Количество просмотров поста</string>
     <string name="shares_text_description">Количество раз, когда постом поделились</string>
     <string name="likes_text_description">Количество лайков поста</string>
+    <string name="delete_menu_post_options">Удалить</string>
+    <string name="publish_post_image_button">Опубликовать пост</string>
+    <string name="edit_field_post_text">Введите текст</string>
+    <string name="edit_post_option">Редактировать</string>
+    <string name="cancel_editing_image_button">Отмена редактирования</string>
+    <string name="chooser_share_post">Поделиться</string>
+    <string name="description_post_save">Сохранить</string>
+    <string name="add_post">Создать пост</string>
 </resources>

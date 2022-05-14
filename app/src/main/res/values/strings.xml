@@ -6,4 +6,12 @@
     <string name="views_text_description">Number of post views</string>
     <string name="shares_text_description">Number of post shares</string>
     <string name="likes_text_description">Number of post likes</string>
+    <string name="delete_menu_post_options">Delete</string>
+    <string name="publish_post_image_button">Publish post</string>
+    <string name="edit_field_post_text">Add your text</string>
+    <string name="edit_post_option">Edit</string>
+    <string name="cancel_editing_image_button">Cancel post editing</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="description_post_save">Save</string>
+    <string name="add_post">Add post</string>
 </resources>
