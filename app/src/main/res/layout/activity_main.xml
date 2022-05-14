@@ -4,97 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scrollbars="vertical"
+        android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
-        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/post" />
 
-    <TextView
-        android:id="@+id/cancelEditingTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/common_spacing"
-        android:background="@color/white"
-        android:gravity="center"
-        android:maxLines="3"
-        android:singleLine="false"
-        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
-        app:layout_constraintEnd_toStartOf="@+id/cancelEditingImageButton"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Редактируемый пост" />
-
-    <ImageButton
-        android:id="@+id/cancelEditingImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@android:color/white"
-        android:padding="@dimen/common_spacing"
-        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cancelEditingTextView"
-        app:srcCompat="@drawable/ic_cancel_24dp"
-        android:contentDescription="@string/cancel_editing_image_button" />
-
-    <View
-        android:id="@+id/cancelEditingTextViewLineTop"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#c0c0c0"
-        app:layout_constraintTop_toTopOf="@id/cancelEditingTextView" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/cancelEditingTextGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="cancelEditingTextView, cancelEditingImageButton, cancelEditingTextViewLineTop" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/toolsTopBarrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        app:constraint_referenced_ids="editTextField, publishImageButton" />
-
-    <EditText
-        android:id="@+id/editTextField"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:hint="@string/edit_field_post_text"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/publishImageButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolsTopBarrier" />
-
-    <ImageButton
-        android:id="@+id/publishImageButton"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/newPostFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/publish_post_image_button"
+        android:contentDescription="@string/add_post"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/editTextField"
-        app:layout_constraintTop_toBottomOf="@+id/toolsTopBarrier"
-        app:srcCompat="@drawable/ic_publish_24dp" />
-
-    <View
-        android:id="@+id/cancelEditingTextViewLineBottom"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#c0c0c0"
-        app:layout_constraintTop_toTopOf="@id/toolsTopBarrier" />
+        app:srcCompat="@drawable/ic_add_24dp"
+        app:tint="@color/teal_700"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

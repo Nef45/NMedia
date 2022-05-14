@@ -6,6 +6,7 @@ import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.data.impl.PostRepositoryInMemory
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.SingleLiveEvent
 
 class PostViewModel : ViewModel(), PostInteractionListener {
 
@@ -13,17 +14,19 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     val data by repository::data
 
+    val sharedPostContent = SingleLiveEvent<String>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
+    val videoUrl = SingleLiveEvent<String>()
+
     val currentPost = MutableLiveData<Post?>(null)
 
-    val cancelEditingPostViewVisibility = MutableLiveData<Int?>(null)
-    val cancelEditingPostTextHint = MutableLiveData<String?>(null)
 
     fun onSaveButtonClicked(text: String) {
         if (text.isBlank()) {
             return
         }
 
-        val post = if (currentPost.value != null && cancelEditingPostViewVisibility.value != null) {
+        val post = if (currentPost.value != null) {
             currentPost.value!!.copy(
                 content = text
             )
@@ -38,12 +41,12 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
         repository.save(post)
         currentPost.value = null
-        onCancelEditingButtonClicked()
     }
 
-    fun onCancelEditingButtonClicked() {
-        cancelEditingPostViewVisibility.value = null
-        cancelEditingPostTextHint.value = null
+
+    fun onAddButtonClicked() {
+        currentPost.value = null
+        navigateToPostContentScreenEvent.call()
     }
 
 // region PostInteractionAdapter
@@ -53,6 +56,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     }
 
     override fun onShareButtonClicked(post: Post) {
+        sharedPostContent.value = post.content
         repository.share(post.id)
     }
 
@@ -61,9 +65,16 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     }
 
     override fun onEditMenuOptionClicked(post: Post) {
-        cancelEditingPostViewVisibility.value = 1
-        cancelEditingPostTextHint.value = post.content
         currentPost.value = post
+        navigateToPostContentScreenEvent.call()
+    }
+
+    override fun onVideoPlayButtonClicked(post: Post) {
+        videoUrl.value = post.videoUrl
+    }
+
+    override fun onVideoBannerClicked(post: Post) {
+        videoUrl.value = post.videoUrl
     }
 
 // endregion PostInteractionAdapter

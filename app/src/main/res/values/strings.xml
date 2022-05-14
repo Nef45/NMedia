@@ -11,4 +11,7 @@
     <string name="edit_field_post_text">Add your text</string>
     <string name="edit_post_option">Edit</string>
     <string name="cancel_editing_image_button">Cancel post editing</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="description_post_save">Save</string>
+    <string name="add_post">Add post</string>
 </resources>

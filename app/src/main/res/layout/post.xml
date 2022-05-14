@@ -54,8 +54,7 @@
         android:contentDescription="@string/options_text_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/authorNameTextView"
-        app:layout_constraintTop_toTopOf="@id/avatarImageView"
-        />
+        app:layout_constraintTop_toTopOf="@id/avatarImageView" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierTop"
@@ -71,13 +70,44 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/common_spacing"
         android:layout_marginBottom="@dimen/common_spacing"
+        android:autoLink="web"
         android:ellipsize="end"
         android:lineSpacingExtra="4dp"
+        android:linksClickable="true"
         android:maxLines="10"
         android:singleLine="false"
         android:textSize="@dimen/text_size"
         app:layout_constraintTop_toBottomOf="@id/barrierTop"
         tools:text="@tools:sample/lorem/random" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/videoContentGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="videoBannerImageButton, videoPlayMaterialButton" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/videoBannerImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_banner_foreground"
+        app:layout_constraintBottom_toTopOf="@id/barrierBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/postText" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/videoPlayMaterialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:icon="@drawable/ic_baseline_play_circle_outline_24"
+        app:iconSize="80dp"
+        app:layout_constraintBottom_toBottomOf="@id/videoBannerImageButton"
+        app:layout_constraintEnd_toEndOf="@id/videoBannerImageButton"
+        app:layout_constraintStart_toStartOf="@id/videoBannerImageButton"
+        app:layout_constraintTop_toTopOf="@id/videoBannerImageButton" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierBottom"
@@ -85,7 +115,7 @@
         android:layout_height="0dp"
         app:barrierDirection="bottom"
         app:barrierMargin="@dimen/common_spacing"
-        app:constraint_referenced_ids="postText" />
+        app:constraint_referenced_ids="videoBannerImageButton" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/likesMaterialButton"

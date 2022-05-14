@@ -1,6 +1,7 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.UrlParse
 
 internal class PostsAdapter(
     private val interactionListener: PostInteractionListener
@@ -69,6 +71,18 @@ internal class PostsAdapter(
             binding.postOptionsMaterialButton.setOnClickListener {
                 popupMenu.show()
             }
+
+            binding.videoPlayMaterialButton.setOnClickListener {
+                interactionListener.onVideoPlayButtonClicked(
+                    post
+                )
+            }
+
+            binding.videoBannerImageButton.setOnClickListener {
+                interactionListener.onVideoBannerClicked(
+                    post
+                )
+            }
         }
 
         fun bind(post: Post) {
@@ -82,8 +96,26 @@ internal class PostsAdapter(
                 shareMaterialButton.text = post.shares.formatNumber()
                 shareMaterialButton.isChecked = post.sharedByMe
                 postViews.text = post.views.toString()
+
+                val urlList = UrlParse.getHyperLinks(postText.text.toString())
+                for (link in urlList) {
+                    if (link.contains("youtube")
+                        ||
+                        link.contains("youtu.be")
+                    ) {
+                        post.videoUrl = link
+                    } else {
+                        post.videoUrl = ""
+                    }
+                }
+                if (post.videoUrl.isEmpty()) {
+                    videoContentGroup.visibility = View.GONE
+                } else {
+                    videoContentGroup.visibility = View.VISIBLE
+                }
             }
         }
+
 
         private fun Int.formatNumber(): String {
             return when {
@@ -108,8 +140,8 @@ internal class PostsAdapter(
                 }
             }
         }
-
     }
+
 
     private object DiffCallback : DiffUtil.ItemCallback<Post>() {
         override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
@@ -119,5 +151,6 @@ internal class PostsAdapter(
         override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
             return newItem == oldItem
         }
+
     }
 }

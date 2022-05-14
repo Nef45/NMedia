@@ -7,18 +7,32 @@ import ru.netology.nmedia.dto.Post
 class PostRepositoryInMemory : PostRepository {
 
     override val data = MutableLiveData(
-        List(100) { index ->
-            Post(
-                100L - index,
-                "Netology",
-                "Text $index",
-                "24.04.2022",
-                999,
-                false,
-                9998,
-                false,
-                0
-            )
+        List(40) { index ->
+            if (index % 10 == 0) {
+                Post(
+                    100L - index,
+                    "Netology",
+                    "$index Инфакт https://youtu.be/hHNcNhcEIoI",
+                    "24.04.2022",
+                    999,
+                    false,
+                    9998,
+                    false,
+                    0
+                )
+            } else {
+                Post(
+                    100L - index,
+                    "Netology",
+                    "Text $index",
+                    "24.04.2022",
+                    999,
+                    false,
+                    9998,
+                    false,
+                    0
+                )
+            }
         }
     )
 
