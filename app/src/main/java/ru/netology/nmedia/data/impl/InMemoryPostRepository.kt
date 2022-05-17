@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.dto.Post
 
-class PostRepositoryInMemory : PostRepository {
+class InMemoryPostRepository : PostRepository {
 
     override val data = MutableLiveData(
         List(40) { index ->
