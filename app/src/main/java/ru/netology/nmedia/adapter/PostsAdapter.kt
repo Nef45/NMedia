@@ -11,6 +11,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.util.UrlParse
+import ru.netology.nmedia.util.formatNumber
 
 internal class PostsAdapter(
     private val interactionListener: PostInteractionListener
@@ -83,6 +84,12 @@ internal class PostsAdapter(
                     post
                 )
             }
+
+            binding.root.setOnClickListener {
+                interactionListener.onPostClicked(
+                    post
+                )
+            }
         }
 
         fun bind(post: Post) {
@@ -115,32 +122,7 @@ internal class PostsAdapter(
                 }
             }
         }
-
-
-        private fun Int.formatNumber(): String {
-            return when {
-                this > 999_999 -> {
-                    (this / 1_000_000).toString() + "." + (this % 1_000_000 / 1_000).toString() + "M"
-                }
-                this > 9999 -> {
-                    (this / 1_000).toString() + "K"
-                }
-                this > 1099 -> {
-                    if (this % 1_000 < 100) {
-                        (this / 1_000).toString() + "K"
-                    } else {
-                        (this / 1_000).toString() + "." + (this % 1_000 / 100).toString() + "K"
-                    }
-                }
-                this > 999 -> {
-                    (this / 1_000).toString() + "K"
-                }
-                else -> {
-                    this.toString()
-                }
             }
-        }
-    }
 
 
     private object DiffCallback : DiffUtil.ItemCallback<Post>() {

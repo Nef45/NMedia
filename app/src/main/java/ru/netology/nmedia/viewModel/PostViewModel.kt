@@ -9,20 +9,24 @@ import ru.netology.nmedia.data.impl.FilePostRepository
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.util.SingleLiveEvent
 
-class PostViewModel(application: Application) : AndroidViewModel(application), PostInteractionListener {
+class PostViewModel(application: Application) : AndroidViewModel(application),
+    PostInteractionListener {
 
     private val repository = FilePostRepository(application)
 
     val data by repository::data
 
     val sharedPostContent = SingleLiveEvent<String>()
-    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
     val videoUrl = SingleLiveEvent<String>()
 
     val currentPost = MutableLiveData<Post?>(null)
 
+    val navigateToPostScreenEvent = SingleLiveEvent<Post>()
+    val postToDisplay = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(text: String) {
+
         if (text.isBlank()) {
             return
         }
@@ -36,14 +40,13 @@ class PostViewModel(application: Application) : AndroidViewModel(application), P
                 id = PostRepository.NEW_POST_ID,
                 author = "Me",
                 content = text,
-                published = "05.05.2022"
+                published = "Today"
             )
         }
-
         repository.save(post)
         currentPost.value = null
+        postToDisplay.value = repository.findById(post.id)
     }
-
 
     fun onAddButtonClicked() {
         currentPost.value = null
@@ -54,20 +57,24 @@ class PostViewModel(application: Application) : AndroidViewModel(application), P
 
     override fun onLikeButtonClicked(post: Post) {
         repository.like(post.id)
+        postToDisplay.value = repository.findById(post.id)
     }
 
     override fun onShareButtonClicked(post: Post) {
         sharedPostContent.value = post.content
         repository.share(post.id)
+        postToDisplay.value = repository.findById(post.id)
     }
 
     override fun onDeleteMenuOptionClicked(post: Post) {
         repository.delete(post.id)
+        postToDisplay.value = repository.findById(post.id)
     }
 
     override fun onEditMenuOptionClicked(post: Post) {
         currentPost.value = post
-        navigateToPostContentScreenEvent.call()
+        navigateToPostContentScreenEvent.value = post.content
+//        postToDisplay.value = repository.findById(post.id)
     }
 
     override fun onVideoPlayButtonClicked(post: Post) {
@@ -76,6 +83,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application), P
 
     override fun onVideoBannerClicked(post: Post) {
         videoUrl.value = post.videoUrl
+    }
+
+    override fun onPostClicked(post: Post) {
+        navigateToPostScreenEvent.value = post
+        postToDisplay.value = post
     }
 
 // endregion PostInteractionAdapter

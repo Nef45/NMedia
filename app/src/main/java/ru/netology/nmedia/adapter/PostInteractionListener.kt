@@ -16,4 +16,6 @@ interface PostInteractionListener {
 
     fun onVideoBannerClicked(post: Post)
 
+    fun onPostClicked(post: Post)
+
 }

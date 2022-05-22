@@ -109,6 +109,15 @@ class FilePostRepository(private val application: Application) : PostRepository 
         }
     }
 
+    fun findById(postId: Long): Post? {
+        for (post in listOfPosts) {
+            if (post.id == postId) {
+                return post
+            }
+        }
+        return null
+    }
+
     private companion object {
         const val POSTS_PREFS_KEY = "posts"
         const val FILE_NAME = "posts.json"
