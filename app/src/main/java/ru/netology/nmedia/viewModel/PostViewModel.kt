@@ -18,12 +18,12 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
 
     val sharedPostContent = SingleLiveEvent<String>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
+    val navigateToPostScreenEvent = SingleLiveEvent<Post>()
+
     val videoUrl = SingleLiveEvent<String>()
 
-    val currentPost = MutableLiveData<Post?>(null)
+    private val currentPost = MutableLiveData<Post?>(null)
 
-    val navigateToPostScreenEvent = SingleLiveEvent<Post>()
-    val postToDisplay = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(text: String) {
 
@@ -45,7 +45,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
         }
         repository.save(post)
         currentPost.value = null
-        postToDisplay.value = repository.findById(post.id)
     }
 
     fun onAddButtonClicked() {
@@ -57,24 +56,20 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
 
     override fun onLikeButtonClicked(post: Post) {
         repository.like(post.id)
-        postToDisplay.value = repository.findById(post.id)
     }
 
     override fun onShareButtonClicked(post: Post) {
         sharedPostContent.value = post.content
         repository.share(post.id)
-        postToDisplay.value = repository.findById(post.id)
     }
 
     override fun onDeleteMenuOptionClicked(post: Post) {
         repository.delete(post.id)
-        postToDisplay.value = repository.findById(post.id)
     }
 
     override fun onEditMenuOptionClicked(post: Post) {
         currentPost.value = post
         navigateToPostContentScreenEvent.value = post.content
-//        postToDisplay.value = repository.findById(post.id)
     }
 
     override fun onVideoPlayButtonClicked(post: Post) {
@@ -87,7 +82,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
 
     override fun onPostClicked(post: Post) {
         navigateToPostScreenEvent.value = post
-        postToDisplay.value = post
     }
 
 // endregion PostInteractionAdapter

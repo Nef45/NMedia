@@ -35,15 +35,15 @@ class FeedFragment : Fragment() {
             startActivity(shareIntent)
         }
 
-        setFragmentResultListener(requestKey = PostContentFragment.REQUEST_KEY) { requestKey, bundle ->
-            if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
+        setFragmentResultListener(requestKey = PostContentFragment.REQUEST_KEY_FEED) { requestKey, bundle ->
+            if (requestKey != PostContentFragment.REQUEST_KEY_FEED) return@setFragmentResultListener
             val newPostContent =
                 bundle.getString(PostContentFragment.RESULT_KEY) ?: return@setFragmentResultListener
             viewModel.onSaveButtonClicked(newPostContent)
         }
 
         viewModel.navigateToPostContentScreenEvent.observe(this) { initialContent ->
-            val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
+            val direction = FeedFragmentDirections.toPostContentFragment(initialContent, CALLER_FEED)
             findNavController().navigate(direction)
         }
 
@@ -55,7 +55,7 @@ class FeedFragment : Fragment() {
         }
 
         viewModel.navigateToPostScreenEvent.observe(this) { post ->
-            val direction = FeedFragmentDirections.toSinglePostFragment()
+            val direction = FeedFragmentDirections.toSinglePostFragment(post.id)
             findNavController().navigate(direction)
         }
     }
@@ -78,5 +78,9 @@ class FeedFragment : Fragment() {
             }
 
         }.root
+    }
+
+    companion object {
+        const val CALLER_FEED = "CallerFeed"
     }
 }

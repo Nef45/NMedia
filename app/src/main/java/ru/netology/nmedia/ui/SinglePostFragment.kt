@@ -11,6 +11,7 @@ import android.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.SinglePostFragmentBinding
 import ru.netology.nmedia.dto.Post
@@ -21,7 +22,11 @@ import ru.netology.nmedia.viewModel.PostViewModel
 
 class SinglePostFragment : Fragment() {
 
+    private val args by navArgs<SinglePostFragmentArgs>()
+
     private val viewModel by activityViewModels<PostViewModel>()
+
+    private lateinit var singlePost: Post
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,35 +36,45 @@ class SinglePostFragment : Fragment() {
         return SinglePostFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
             with(binding) {
 
-                viewModel.postToDisplay.observe(viewLifecycleOwner) { post ->
-                    if (post != null) {
-                        render(post)
-                    }
+                viewModel.data.value?.let { listOfPosts ->
+                    singlePost = listOfPosts.first { post -> post.id == args.postId }
+                    render(singlePost)
                 }
 
-                setFragmentResultListener(requestKey = PostContentFragment.REQUEST_KEY) { requestKey, bundle ->
-                    if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
-                    val newPostContent =
-                        bundle.getString(PostContentFragment.RESULT_KEY) ?: return@setFragmentResultListener
+                viewModel.data.observe(viewLifecycleOwner) { listOfPosts ->
+                    if (!listOfPosts.any{post -> post.id == args.postId}) {
+                        return@observe
+                    }
+                    if (listOfPosts.isNullOrEmpty()) {
+                        return@observe
+                    }
+                    singlePost = listOfPosts.first { post -> post.id == args.postId }
+                    render(singlePost)
+                }
 
+                setFragmentResultListener(requestKey = PostContentFragment.REQUEST_KEY_POST) { requestKey, bundle ->
+                    if (requestKey != PostContentFragment.REQUEST_KEY_POST) return@setFragmentResultListener
+                    val newPostContent =
+                        bundle.getString(PostContentFragment.RESULT_KEY)
+                            ?: return@setFragmentResultListener
                     viewModel.onSaveButtonClicked(newPostContent)
                 }
 
                 viewModel.navigateToPostContentScreenEvent.observe(viewLifecycleOwner) { initialContent ->
-                    val direction = ru.netology.nmedia.ui.SinglePostFragmentDirections.singlePostFragmentToPostContentFragment(initialContent)
+                    val direction =
+                        ru.netology.nmedia.ui.SinglePostFragmentDirections.singlePostFragmentToPostContentFragment(
+                            initialContent,
+                            CALLER_POST
+                        )
                     findNavController().navigate(direction)
                 }
 
                 likesMaterialButton.setOnClickListener {
-                    viewModel.postToDisplay.value?.let { post ->
-                        viewModel.onLikeButtonClicked(
-                            post
-                        )
-                    }
+                    viewModel.onLikeButtonClicked(singlePost)
                 }
 
                 shareMaterialButton.setOnClickListener {
-                    viewModel.postToDisplay.value?.let { post -> viewModel.onShareButtonClicked(post) }
+                    viewModel.onShareButtonClicked(singlePost)
                 }
                 viewModel.sharedPostContent.observe(viewLifecycleOwner) { postContent ->
                     val intent = Intent().apply {
@@ -78,20 +93,12 @@ class SinglePostFragment : Fragment() {
                         setOnMenuItemClickListener { option ->
                             when (option.itemId) {
                                 R.id.deletePostOption -> {
-                                    viewModel.postToDisplay.value?.let { post ->
-                                        viewModel.onDeleteMenuOptionClicked(
-                                            post
-                                        )
-                                    }
                                     findNavController().popBackStack()
+                                    viewModel.onDeleteMenuOptionClicked(singlePost)
                                     true
                                 }
                                 R.id.editPostOption -> {
-                                    viewModel.postToDisplay.value?.let { post ->
-                                        viewModel.onEditMenuOptionClicked(
-                                            post
-                                        )
-                                    }
+                                    viewModel.onEditMenuOptionClicked(singlePost)
                                     true
                                 }
                                 else -> {
@@ -105,8 +112,8 @@ class SinglePostFragment : Fragment() {
                 binding.postOptionsMaterialButton.setOnClickListener {
                     popupMenu.show()
                 }
-            }
 
+            }
         }.root
     }
 
@@ -137,6 +144,10 @@ class SinglePostFragment : Fragment() {
         } else {
             videoContentGroup.visibility = View.VISIBLE
         }
+    }
+
+    companion object {
+        const val CALLER_POST = "CallerPost"
     }
 
 }

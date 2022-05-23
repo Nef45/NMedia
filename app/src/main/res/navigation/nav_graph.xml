@@ -24,6 +24,9 @@
             android:name="initialContent"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="caller"
+            app:argType="string" />
 
     </fragment>
     <fragment
@@ -32,5 +35,8 @@
         <action
             android:id="@+id/singlePostFragmentToPostContentFragment"
             app:destination="@id/postContentFragment" />
+        <argument
+            android:name="postId"
+            app:argType="long" />
     </fragment>
 </navigation>
