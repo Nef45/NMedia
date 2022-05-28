@@ -76,7 +76,6 @@ class FeedFragment : Fragment() {
             binding.newPostFab.setOnClickListener {
                 viewModel.onAddButtonClicked()
             }
-
         }.root
     }
 
