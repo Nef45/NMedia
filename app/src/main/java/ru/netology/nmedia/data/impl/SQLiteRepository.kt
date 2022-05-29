@@ -63,7 +63,7 @@ class SQLiteRepository(
     override fun update(post: Post) {
         val newListOfPosts = listOfPosts.map { postInList ->
             if (postInList.id == post.id) {
-                dao.save(postInList)
+                dao.save(post)
             } else {
                 postInList
             }

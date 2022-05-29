@@ -17,7 +17,9 @@ class PostDaoImpl(
         ).use { cursor ->
             cursor.moveToNext()
             List(cursor.count) { index ->
-                cursor.toPost()
+                cursor.toPost().also {
+                    cursor.moveToNext()
+                }
             }
         }
     }
