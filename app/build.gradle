@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -69,5 +70,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
 
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    implementation "androidx.room:room-runtime:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
 
 }

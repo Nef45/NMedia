@@ -12,10 +12,7 @@ interface PostRepository {
 
     fun delete(postId: Long)
 
-    fun create(post: Post)
-
-    fun update(post: Post)
-
+    fun save(post: Post)
 
     companion object {
         const val NEW_POST_ID = 0L
