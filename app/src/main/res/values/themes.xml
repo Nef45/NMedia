@@ -13,4 +13,31 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Widget.AppTheme.LikeButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="icon">@drawable/ic_like_button_shape</item>
+        <item name="iconTint">@color/ic_like_button_tint</item>
+        <item name="iconSize">@dimen/button_icons_size</item>
+        <item name="android:textColor">@color/grey_500</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.AppTheme.ShareButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="icon">@drawable/ic_share_24dp</item>
+        <item name="iconTint">@color/ic_share_button_tint</item>
+        <item name="iconSize">@dimen/button_icons_size</item>
+        <item name="android:textColor">@color/grey_500</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.AppTheme.OptionsButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="icon">@drawable/ic_more_options_24dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconTint">@color/ic_more_options_tint</item>
+        <item name="cornerRadius">60dp</item>
+        <item name="rippleColor">@color/teal_200</item>
+        <item name="android:minHeight">@dimen/button_icons_size</item>
+        <item name="android:minWidth">@dimen/button_icons_size</item>
+    </style>
+
 </resources>
