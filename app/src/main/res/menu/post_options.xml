@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/deletePostOption"
+        android:title="@string/delete_menu_post_options"
+        />
+
+    <item
+        android:id="@+id/editPostOption"
+        android:title="@string/edit_post_option"
+        />
+
+</menu>
