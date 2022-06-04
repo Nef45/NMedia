@@ -14,4 +14,9 @@
     <string name="chooser_share_post">Share post</string>
     <string name="description_post_save">Save</string>
     <string name="add_post">Add post</string>
+    <string name="notification_user_liked">User %1$s liked %2$s\'s post</string>
+    <string name="notification_new_post"> A new post from %1$s:</string>
+    <string name="channel_name">Server notification</string>
+    <string name="channel_description">Notification from remote server</string>
+
 </resources>

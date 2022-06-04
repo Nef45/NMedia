@@ -15,4 +15,8 @@
     <string name="chooser_share_post">Поделиться</string>
     <string name="description_post_save">Сохранить</string>
     <string name="add_post">Создать пост</string>
+    <string name="notification_user_liked"> %1$s поставил лайк посту %2$s</string>
+    <string name="notification_new_post"> Новый пост от %1$s:</string>
+    <string name="channel_name">Уведомления сервера</string>
+    <string name="channel_description">Уведомления с удаленного сервера</string>
 </resources>
