@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/common_spacing"
+    tools:context="ui.SinglePostFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/dateAndTimeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size"
+            app:layout_constraintBottom_toBottomOf="@id/avatarImageView"
+            app:layout_constraintEnd_toEndOf="@id/authorNameTextView"
+            app:layout_constraintStart_toStartOf="@id/authorNameTextView"
+            app:layout_constraintTop_toBottomOf="@id/authorNameTextView"
+            tools:text="21 мая в 18:36" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/postOptionsMaterialButton"
+            style="@style/Widget.AppTheme.OptionsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/options_text_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/authorNameTextView"
+            app:layout_constraintTop_toTopOf="@id/avatarImageView" />
+
+        <TextView
+            android:id="@+id/authorNameTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_spacing"
+            android:layout_marginEnd="@dimen/common_spacing"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text=""
+            android:textSize="@dimen/text_size"
+            app:layout_constraintBottom_toTopOf="@id/dateAndTimeTextView"
+            app:layout_constraintEnd_toStartOf="@id/postOptionsMaterialButton"
+            app:layout_constraintStart_toEndOf="@+id/avatarImageView"
+            app:layout_constraintTop_toTopOf="@+id/avatarImageView"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Нетология. Университет интернет-профессий" />
+
+
+        <TextView
+            android:id="@+id/postText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_spacing"
+            android:autoLink="web"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="12dp"
+            android:lineSpacingExtra="4dp"
+            android:linksClickable="true"
+            android:maxHeight="416dp"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:textSize="@dimen/text_size"
+            app:layout_constraintTop_toBottomOf="@id/barrierTop"
+            tools:text="@tools:sample/lorem/random" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/videoPlayMaterialButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:icon="@drawable/ic_baseline_play_circle_outline_24"
+            app:iconSize="80dp"
+            app:layout_constraintBottom_toBottomOf="@id/videoBannerImageButton"
+            app:layout_constraintEnd_toEndOf="@id/videoBannerImageButton"
+            app:layout_constraintStart_toStartOf="@id/videoBannerImageButton"
+            app:layout_constraintTop_toTopOf="@id/videoBannerImageButton" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierTop"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:barrierMargin="@dimen/common_spacing"
+            app:constraint_referenced_ids="avatarImageView, dateAndTimeTextView, postOptionsMaterialButton"
+            tools:layout_editor_absoluteY="64dp" />
+
+        <ImageButton
+            android:id="@+id/viewsImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/views_text_description"
+            app:layout_constraintBottom_toBottomOf="@id/shareMaterialButton"
+            app:layout_constraintEnd_toStartOf="@id/postViews"
+            app:layout_constraintTop_toTopOf="@id/shareMaterialButton"
+            app:srcCompat="@drawable/ic_views_24dp" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/videoBannerImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_banner_foreground"
+            app:layout_constraintBottom_toTopOf="@id/barrierBottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postText" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/videoContentGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="videoBannerImageButton, videoPlayMaterialButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shareMaterialButton"
+            style="@style/Widget.AppTheme.ShareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:contentDescription="@string/shares_text_description"
+            app:layout_constraintBottom_toBottomOf="@id/likesMaterialButton"
+            app:layout_constraintStart_toEndOf="@id/likesMaterialButton"
+            app:layout_constraintTop_toTopOf="@id/likesMaterialButton"
+            tools:text="5" />
+
+        <ImageView
+            android:id="@+id/avatarImageView"
+            android:layout_width="@dimen/post_avatar_size"
+            android:layout_height="@dimen/post_avatar_size"
+            android:contentDescription="@string/avatar_text_description"
+            android:scaleType="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/likesMaterialButton"
+            style="@style/Widget.AppTheme.LikeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:contentDescription="@string/likes_text_description"
+            app:layout_constraintEnd_toStartOf="@id/likesMaterialButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrierBottom"
+            tools:text="100" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierBottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:barrierMargin="@dimen/common_spacing"
+            app:constraint_referenced_ids="videoBannerImageButton"
+            tools:layout_editor_absoluteY="278dp" />
+
+        <TextView
+            android:id="@+id/postViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/text_size"
+            app:layout_constraintBottom_toBottomOf="@id/viewsImageButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/viewsImageButton"
+            tools:text="5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
